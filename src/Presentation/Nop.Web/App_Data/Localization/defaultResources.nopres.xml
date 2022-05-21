@@ -687,7 +687,58 @@
   <LocaleResource Name="Account.VendorInfo.Picture.Remove">
     <Value>Remove picture</Value>
   </LocaleResource>
-  <LocaleResource Name="Account.YourAddress">
+
+    <LocaleResource Name="Account.VendorInfo.Longitude">
+        <Value>Zipcodes that you wish to sell</Value>
+    </LocaleResource>
+
+    <LocaleResource Name="Account.VendorInfo.Latitude">
+        <Value>Zipcodes that you wish to sell</Value>
+    </LocaleResource>
+
+    <LocaleResource Name="Account.VendorInfo.IsWholeCitySupply">
+        <Value>are you selling to whole city?</Value>
+    </LocaleResource>
+
+<!--manual entries-->
+    <LocaleResource Name="Account.VendorInfo.Citys">
+        <Value>Citys that you wish to sell</Value>
+    </LocaleResource>
+
+    <LocaleResource Name="Account.VendorInfo.CityFromPrice">
+        <Value>sell to city only if product Price is above</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.VendorInfo.CityUptoPrice">
+        <Value>sell to city only if product Price is below</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.VendorInfo.CityFromWeight">
+        <Value>sell to city only if product weight is above</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.VendorInfo.CityUptoWeight">
+        <Value>sell to city only if product weight is below</Value>
+    </LocaleResource>
+
+    <!--<LocaleResource Name="Account.VendorInfo.PricePerKiloMeter">
+        <Value>how much you want charge per kilo meter</Value>
+    </LocaleResource>
+
+    <LocaleResource Name="Account.VendorInfo.PricePerWeight">
+        <Value>how much you want charge per kilo gram</Value>
+    </LocaleResource>-->
+
+    <LocaleResource Name="Account.VendorInfo.ZipCodes">
+        <Value>Zipcodes that you wish to sell</Value>
+    </LocaleResource>
+<!--manual entrie end-->
+
+
+
+
+
+
+
+
+    <LocaleResource Name="Account.YourAddress">
     <Value>Your Address</Value>
   </LocaleResource>
   <LocaleResource Name="Account.YourContactInformation">

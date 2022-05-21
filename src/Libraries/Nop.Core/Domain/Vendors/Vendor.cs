@@ -103,5 +103,24 @@ namespace Nop.Core.Domain.Vendors
         /// Gets or sets a value indicating whether the price range should be entered manually
         /// </summary>
         public bool ManuallyPriceRange { get; set; }
+
+       // public string GST { get; set; }
+
+
+        // public string Pancard { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public bool IsWholeCitySupply { get; set; }
+
+        public string Citys { get; set; }
+        public float CityFromPrice{ get; set; }
+        public float CityUptoPrice { get; set; }
+
+        public float CityFromWeight { get; set; }
+        public float CityUptoWeight { get; set; }
+
+       // public decimal PricePerKiloMeter { get; set; }
+       // public decimal PricePerWeight { get; set; }
+        public string ZipCodes { get; set; }
     }
 }

@@ -39,6 +39,83 @@
                         <textarea asp-for="Description"></textarea>
                         <span asp-validation-for="Description"></span>
                     </div>
+
+      @*                  public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public bool IsWholeCitySupply { get; set; }
+
+        public string Citys { get; set; }
+        public float CityFromPrice{ get; set; }
+        public float CityUptoPrice { get; set; }
+
+        public float CityFromWeight { get; set; }
+        public float CityUptoWeight { get; set; }
+
+       // public decimal PricePerKiloMeter { get; set; }
+       // public decimal PricePerWeight { get; set; }
+        public string ZipCodes { get; set; }
+
+                    <div class="inputs">
+                        <label asp-for="IsWholeCitySupply" asp-postfix=":"></label>
+                        <textarea asp-for="IsWholeCitySupply"></textarea>
+                        <span asp-validation-for="IsWholeCitySupply"></span>
+                    </div> *@
+                    <div class="inputs">
+                                @*<label>@T("Account.VendorInfo.IsWholeCitySupply"):</label>*@
+                                <label>IsWholeCitySupply</label>
+                                <ul class="option-list">
+                                    <li>
+                                        <input asp-for="IsWholeCitySupply" />
+                                        <label asp-for="IsWholeCitySupply"></label>
+                                        <span asp-validation-for="IsWholeCitySupply"></span>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                    <div class="inputs">
+                        <label asp-for="Citys" asp-postfix=":"></label>
+                        <input asp-for="Citys"/>
+                        <span asp-validation-for="Citys"></span>
+                    </div>
+                    <div class="inputs">
+                        <label asp-for="CityFromPrice" asp-postfix=":"></label>
+                        <input asp-for="CityFromPrice"/>
+                        <span asp-validation-for="CityFromPrice"></span>
+                    </div>
+                    <div class="inputs">
+                        <label asp-for="CityUptoPrice" asp-postfix=":"></label>
+                        <input asp-for="CityUptoPrice"/>
+                        <span asp-validation-for="CityUptoPrice"></span>
+                    </div>
+                    <div class="inputs">
+                        <label asp-for="CityFromWeight" asp-postfix=":"></label>
+                        <input asp-for="CityFromWeight"/>
+                        <span asp-validation-for="CityFromWeight"></span>
+                    </div>
+                    <div class="inputs">
+                        <label asp-for="CityUptoWeight" asp-postfix=":"></label>
+                        <input asp-for="CityUptoWeight"/>
+                        <span asp-validation-for="CityUptoWeight"></span>
+                    </div>
+@*                    <div class="inputs">
+                        <label asp-for="PricePerKiloMeter" asp-postfix=":"></label>
+                        <textarea asp-for="PricePerKiloMeter"></textarea>
+                        <span asp-validation-for="PricePerKiloMeter"></span>
+                    </div>
+                    <div class="inputs">
+                        <label asp-for="PricePerWeight" asp-postfix=":"></label>
+                        <textarea asp-for="PricePerWeight"></textarea>
+                        <span asp-validation-for="PricePerWeight"></span>
+                    </div>*@
+                    <div class="inputs">
+                        <label asp-for="ZipCodes" asp-postfix=":"></label>
+                        <input asp-for="ZipCodes"/>
+                        <span asp-validation-for="ZipCodes"></span>
+                    </div>
+
+
+
                     <div class="inputs">
                         <label asp-for="PictureUrl" asp-postfix=":"></label>
                         <input name="uploadedFile" type="file" accept="image/*" />

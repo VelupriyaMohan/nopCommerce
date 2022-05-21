@@ -350,6 +350,15 @@ namespace Nop.Web.Controllers
                 vendor.Name = model.Name;
                 vendor.Email = model.Email;
                 vendor.Description = description;
+                vendor.IsWholeCitySupply = model.IsWholeCitySupply;
+                vendor.Latitude = model.Latitude;
+                vendor.Longitude = model.Longitude;
+                vendor.CityUptoPrice = model.CityUptoPrice;
+                vendor.CityFromPrice = model.CityFromPrice;
+                vendor.Citys = model.Citys;
+                vendor.CityFromWeight = model.CityFromWeight;
+                vendor.CityUptoWeight = model.CityUptoWeight;
+                vendor.ZipCodes = model.ZipCodes;
 
                 if (picture != null)
                 {

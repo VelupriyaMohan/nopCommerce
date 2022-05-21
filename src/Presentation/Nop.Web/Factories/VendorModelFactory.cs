@@ -223,6 +223,16 @@ namespace Nop.Web.Factories
                 model.Description = vendor.Description;
                 model.Email = vendor.Email;
                 model.Name = vendor.Name;
+
+                model.IsWholeCitySupply = vendor.IsWholeCitySupply;
+                model.Latitude = vendor.Latitude;
+                model.Longitude = vendor.Longitude;
+                model.CityUptoPrice = vendor.CityUptoPrice;
+                model.CityFromPrice = vendor.CityFromPrice;
+                model.Citys = vendor.Citys;
+                model.CityFromWeight = vendor.CityFromWeight;
+                model.CityUptoWeight = vendor.CityUptoWeight;
+                model.ZipCodes = vendor.ZipCodes;
             }
 
             var picture = await _pictureService.GetPictureByIdAsync(vendor.PictureId);
