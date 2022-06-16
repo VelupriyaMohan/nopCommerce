@@ -290,6 +290,9 @@ namespace Nop.Services.Discounts
             else
                 result = discount.DiscountAmount;
 
+            if (result < decimal.Zero)
+               return result;
+
             //validate maximum discount amount
             if (discount.UsePercentage &&
                 discount.MaximumDiscountAmount.HasValue &&
@@ -324,12 +327,12 @@ namespace Nop.Services.Discounts
             foreach (var discount in discounts)
             {
                 var currentDiscountValue = GetDiscountAmount(discount, amount);
-                if (currentDiscountValue <= discountAmount)
-                    continue;
+                //if (currentDiscountValue <= discountAmount)
+                //    continue;
 
                 discountAmount = currentDiscountValue;
 
-                result.Clear();
+               // result.Clear();
                 result.Add(discount);
             }
             //now let's check cumulative discounts

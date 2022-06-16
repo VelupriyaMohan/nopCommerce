@@ -11,6 +11,7 @@ using Nop.Core.Domain.Discounts;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Services.Discounts;
+using Nop.Services.Vendors;
 
 namespace Nop.Services.Catalog
 {
@@ -32,6 +33,8 @@ namespace Nop.Services.Catalog
         private readonly IProductService _productService;
         private readonly IStaticCacheManager _staticCacheManager;
         private readonly IStoreContext _storeContext;
+        private readonly IVendorService _vendorService;
+
 
         #endregion
 
@@ -47,7 +50,8 @@ namespace Nop.Services.Catalog
             IProductAttributeParser productAttributeParser,
             IProductService productService,
             IStaticCacheManager staticCacheManager,
-            IStoreContext storeContext)
+            IStoreContext storeContext,
+            IVendorService vendorService)
         {
             _catalogSettings = catalogSettings;
             _currencySettings = currencySettings;
@@ -60,6 +64,7 @@ namespace Nop.Services.Catalog
             _productService = productService;
             _staticCacheManager = staticCacheManager;
             _storeContext = storeContext;
+            _vendorService =vendorService;
         }
 
         #endregion
@@ -210,6 +215,11 @@ namespace Nop.Services.Catalog
 
             //discounts applied to manufacturers
             foreach (var discount in await GetAllowedDiscountsAppliedToManufacturersAsync(product, customer))
+                if (!_discountService.ContainsDiscount(allowedDiscounts, discount))
+                    allowedDiscounts.Add(discount);
+
+            //discounts applied to vendors
+            foreach (var discount in await GetAllowedDiscountsAppliedToVendorsAsync(product, customer))
                 if (!_discountService.ContainsDiscount(allowedDiscounts, discount))
                     allowedDiscounts.Add(discount);
 
@@ -580,6 +590,73 @@ namespace Nop.Services.Catalog
 
             return rez;
         }
+
+
+
+        /// <summary>
+        /// Gets allowed discounts applied to Vendors
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <param name="customer">Customer</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the discounts
+        /// </returns>
+        protected virtual async Task<IList<Discount>> GetAllowedDiscountsAppliedToVendorsAsync(Product product, Customer customer)
+        {
+            var allowedDiscounts = new List<Discount>();
+            if (_catalogSettings.IgnoreDiscounts)
+                return allowedDiscounts;
+
+            foreach (var discount in await _discountService.GetAllDiscountsAsync(DiscountType.AssignedToVendors))
+            {
+                //load identifier of vendors with this discount applied to
+                var discountVendorIds = await _vendorService.GetAppliedVendorIdsAsync(discount, customer);
+                //if (discountVendorIds.Any())
+                //    allowedDiscounts.Add(discount);
+               // compare with vendors of this product
+                //var productVendorIds;
+                //if (discountVendorIds.Any())
+                //{
+                //    productVendorIds =
+                //        (await _vendorService.GetProductVendorsByProductIdAsync(product.Id))
+                //        .Select(x => x.VendorId)
+                //        .ToList();
+                //}
+
+               
+                    if (discountVendorIds.Contains(product.VendorId))
+                    //TODO: as we dont have any conditionals for commission keeping it commented, 
+                    //in future subject to change
+                    //if (!_discountService.ContainsDiscount(allowedDiscounts, discount) &&
+                     //   (await _discountService.ValidateDiscountAsync(discount, customer)).IsValid)
+                    allowedDiscounts.Add(discount);
+
+
+                // compare with vendors of this product
+                //var productVendorIds = new List<int>();
+                //if (discountVendorIds.Any())
+                //{
+                //    productVendorIds =
+                //        (await _vendorService.GetProductVendorsByProductIdAsync(product.Id))
+                //        .Select(x => x.VendorId)
+                //        .ToList();
+                //}
+
+                //foreach (var vendorId in productVendorIds)
+                //{
+                //    if (!discountVendorIds.Contains(vendorId))
+                //        continue;
+
+                //    if (!_discountService.ContainsDiscount(allowedDiscounts, discount) &&
+                //        (await _discountService.ValidateDiscountAsync(discount, customer)).IsValid)
+                //        allowedDiscounts.Add(discount);
+                //}
+            }
+
+            return allowedDiscounts;
+        }
+
 
         #endregion
     }

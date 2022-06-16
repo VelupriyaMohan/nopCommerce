@@ -12,6 +12,7 @@ using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
 using Nop.Services.Security;
+using Nop.Services.Vendors;
 using Nop.Web.Areas.Admin.Factories;
 using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Nop.Web.Areas.Admin.Models.Discounts;
@@ -36,6 +37,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         private readonly INotificationService _notificationService;
         private readonly IPermissionService _permissionService;
         private readonly IProductService _productService;
+        private readonly IVendorService _vendorService;
 
         #endregion
 
@@ -51,7 +53,8 @@ namespace Nop.Web.Areas.Admin.Controllers
             IManufacturerService manufacturerService,
             INotificationService notificationService,
             IPermissionService permissionService,
-            IProductService productService)
+            IProductService productService,
+            IVendorService vendorService)
         {
             _catalogSettings = catalogSettings;
             _categoryService = categoryService;
@@ -64,6 +67,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             _notificationService = notificationService;
             _permissionService = permissionService;
             _productService = productService;
+            _vendorService = vendorService;
         }
 
         #endregion
@@ -721,6 +725,101 @@ namespace Nop.Web.Areas.Admin.Controllers
             await _discountService.DeleteDiscountUsageHistoryAsync(discountUsageHistoryEntry);
 
             return new NullJsonResult();
+        }
+
+        #endregion
+
+
+
+        #region Applied to vendors
+
+        [HttpPost]
+        public virtual async Task<IActionResult> VendorList(DiscountVendorSearchModel searchModel)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+                return await AccessDeniedDataTablesJson();
+
+            //try to get a discount with the specified id
+            var discount = await _discountService.GetDiscountByIdAsync(searchModel.DiscountId)
+                ?? throw new ArgumentException("No discount found with the specified id");
+
+            //prepare model
+            var model = await _discountModelFactory.PrepareDiscountVendorListModelAsync(searchModel, discount);
+
+            return Json(model);
+        }
+
+        public virtual async Task<IActionResult> VendorDelete(int discountId, int vendorId)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            //try to get a discount with the specified id
+            var discount = await _discountService.GetDiscountByIdAsync(discountId)
+                ?? throw new ArgumentException("No discount found with the specified id", nameof(discountId));
+
+            //try to get a vendor with the specified id
+            var vendor = await _vendorService.GetVendorByIdAsync(vendorId)
+                ?? throw new ArgumentException("No vendor found with the specified id", nameof(vendorId));
+
+            //remove discount
+            if (await _vendorService.GetDiscountAppliedToVendorAsync(vendor.Id, discount.Id) is DiscountVendorMapping discountVendorMapping)
+                await _vendorService.DeleteDiscountVendorMappingAsync(discountVendorMapping);
+
+            await _vendorService.UpdateVendorAsync(vendor);
+
+            return new NullJsonResult();
+        }
+
+        public virtual async Task<IActionResult> VendorAddPopup(int discountId)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            //prepare model
+            var model = await _discountModelFactory.PrepareAddVendorToDiscountSearchModelAsync(new AddVendorToDiscountSearchModel());
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> VendorAddPopupList(AddVendorToDiscountSearchModel searchModel)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+                return await AccessDeniedDataTablesJson();
+
+            //prepare model
+            var model = await _discountModelFactory.PrepareAddVendorToDiscountListModelAsync(searchModel);
+
+            return Json(model);
+        }
+
+        [HttpPost]
+        [FormValueRequired("save")]
+        public virtual async Task<IActionResult> VendorAddPopup(AddVendorToDiscountModel model)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            //try to get a discount with the specified id
+            var discount = await _discountService.GetDiscountByIdAsync(model.DiscountId)
+                ?? throw new ArgumentException("No discount found with the specified id");
+
+            foreach (var id in model.SelectedVendorIds)
+            {
+                var vendor = await _vendorService.GetVendorByIdAsync(id);
+                if (vendor == null)
+                    continue;
+
+                if (await _vendorService.GetDiscountAppliedToVendorAsync(vendor.Id, discount.Id) is null)
+                    await _vendorService.InsertDiscountVendorMappingAsync(new DiscountVendorMapping { EntityId = vendor.Id, DiscountId = discount.Id });
+
+                await _vendorService.UpdateVendorAsync(vendor);
+            }
+
+            ViewBag.RefreshPage = true;
+
+            return View(new AddVendorToDiscountSearchModel());
         }
 
         #endregion

@@ -19,6 +19,7 @@
         var selectedDiscountTypeId = $("#@Html.IdFor(model => model.DiscountTypeId)").val();
         if (selectedDiscountTypeId == @(((int) DiscountType.AssignedToCategories).ToString())) {
             $('[data-card-name=discount-applied-to-categories]').showElement();
+            $('[data-card-name=discount-applied-to-vendors]').hideElement();
             $('[data-card-name=discount-applied-to-manufacturers]').hideElement();
             $('[data-card-name=discount-applied-to-products]').hideElement();
             $('#pnlMaximumDiscountedQuantity').showElement();
@@ -27,16 +28,26 @@
             $('[data-card-name=discount-applied-to-categories]').hideElement();
             $('[data-card-name=discount-applied-to-manufacturers]').showElement();
             $('[data-card-name=discount-applied-to-products]').hideElement();
+            $('[data-card-name=discount-applied-to-vendors]').hideElement();
+            $('#pnlMaximumDiscountedQuantity').showElement();
+            $('#pnlAppliedToSubCategories').hideElement();
+    } else if (selectedDiscountTypeId == @(((int) DiscountType.AssignedToVendors).ToString())) {
+            $('[data-card-name=discount-applied-to-categories]').hideElement();
+            $('[data-card-name=discount-applied-to-vendors]').showElement();
+            $('[data-card-name=discount-applied-to-manufacturers]').hideElement();
+            $('[data-card-name=discount-applied-to-products]').hideElement();
             $('#pnlMaximumDiscountedQuantity').showElement();
             $('#pnlAppliedToSubCategories').hideElement();
     } else if (selectedDiscountTypeId == @(((int) DiscountType.AssignedToSkus).ToString())) {
             $('[data-card-name=discount-applied-to-categories]').hideElement();
             $('[data-card-name=discount-applied-to-manufacturers]').hideElement();
+            $('[data-card-name=discount-applied-to-vendors]').hideElement();
             $('[data-card-name=discount-applied-to-products]').showElement();
             $('#pnlMaximumDiscountedQuantity').showElement();
             $('#pnlAppliedToSubCategories').hideElement();
     } else {
             $('[data-card-name=discount-applied-to-categories]').hideElement();
+            $('[data-card-name=discount-applied-to-vendors]').hideElement();
             $('[data-card-name=discount-applied-to-manufacturers]').hideElement();
             $('[data-card-name=discount-applied-to-products]').hideElement();
             $('#pnlMaximumDiscountedQuantity').hideElement();

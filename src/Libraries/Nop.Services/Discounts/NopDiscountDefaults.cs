@@ -93,6 +93,29 @@ namespace Nop.Services.Discounts
         /// </summary>
         public static string ManufacturerIdsPrefix => "Nop.discount.manufacturerids.bydiscount.";
 
+
+        /// <summary>
+        /// Key for vendor IDs of a discount  
+        /// </summary>
+        /// <remarks>
+        /// {0} : discount id
+        /// {1} : roles of the current user
+        /// {2} : current store ID
+        /// </remarks>
+        public static CacheKey VendorIdsByDiscountCacheKey => new("Nop.discount.vendorids.bydiscount.{0}-{1}-{2}", VendorIdsByDiscountPrefix, VendorIdsPrefix);
+
+        /// <summary>
+        /// Gets a key pattern to clear cache
+        /// </summary>
+        /// <remarks>
+        /// {0} : discount id
+        /// </remarks>
+        public static string VendorIdsByDiscountPrefix => "Nop.discount.vendorids.bydiscount.{0}";
+
+        /// <summary>
+        /// Gets a key pattern to clear cache
+        /// </summary>
+        public static string VendorIdsPrefix => "Nop.discount.vendorids.bydiscount.";
         #endregion
     }
 }

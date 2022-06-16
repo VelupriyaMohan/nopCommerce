@@ -13686,6 +13686,9 @@
   <LocaleResource Name="Admin.Promotions.Discounts.AppliedToManufacturers">
     <Value>Applied to manufacturers</Value>
   </LocaleResource>
+    <LocaleResource Name="Admin.Promotions.Discounts.AppliedToVendors">
+        <Value>Applied to vendors</Value>
+    </LocaleResource>
   <LocaleResource Name="Admin.Promotions.Discounts.AppliedToManufacturers.AddNew">
     <Value>Add a new manufacturer</Value>
   </LocaleResource>
@@ -13695,6 +13698,15 @@
   <LocaleResource Name="Admin.Promotions.Discounts.AppliedToManufacturers.SaveBeforeEdit">
     <Value>You need to save the discount before you can add manufacturers for this discount page.</Value>
   </LocaleResource>
+    <LocaleResource Name="Admin.Promotions.Discounts.AppliedToVendors.AddNew">
+        <Value>Add a new vendor</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Promotions.Discounts.AppliedToVendors.Vendor">
+        <Value>Vendor</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Promotions.Discounts.AppliedToVendors.SaveBeforeEdit">
+        <Value>You need to save the discount before you can add vendor for this discount page.</Value>
+    </LocaleResource>
   <LocaleResource Name="Admin.Promotions.Discounts.AppliedToProducts">
     <Value>Applied to products</Value>
   </LocaleResource>
@@ -16809,6 +16821,9 @@
   <LocaleResource Name="Enums.Nop.Core.Domain.Discounts.DiscountType.AssignedToManufacturers">
     <Value>Assigned to manufacturers</Value>
   </LocaleResource>
+    <LocaleResource Name="Enums.Nop.Core.Domain.Discounts.DiscountType.AssignedToVendors">
+        <Value>Assigned to vendors</Value>
+    </LocaleResource>
   <LocaleResource Name="Enums.Nop.Core.Domain.Discounts.DiscountType.AssignedToOrderSubTotal">
     <Value>Assigned to order subtotal</Value>
   </LocaleResource>

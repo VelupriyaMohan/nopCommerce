@@ -160,5 +160,37 @@ namespace Nop.Web.Areas.Admin.Factories
         /// The task result contains the manufacturer list model to add to the discount
         /// </returns>
         Task<AddManufacturerToDiscountListModel> PrepareAddManufacturerToDiscountListModelAsync(AddManufacturerToDiscountSearchModel searchModel);
+
+        /// <summary>
+        /// Prepare paged discount vendor list model
+        /// </summary>
+        /// <param name="searchModel">Discount vendor search model</param>
+        /// <param name="discount">Discount</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the discount vendor list model
+        /// </returns>
+        Task<DiscountVendorListModel> PrepareDiscountVendorListModelAsync(DiscountVendorSearchModel searchModel,
+            Discount discount);
+
+        /// <summary>
+        /// Prepare vendor search model to add to the discount
+        /// </summary>
+        /// <param name="searchModel">Vendor search model to add to the discount</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the vendor search model to add to the discount
+        /// </returns>
+        Task<AddVendorToDiscountSearchModel> PrepareAddVendorToDiscountSearchModelAsync(AddVendorToDiscountSearchModel searchModel);
+
+        /// <summary>
+        /// Prepare paged vendor list model to add to the discount
+        /// </summary>
+        /// <param name="searchModel">Vendor search model to add to the discount</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the vendor list model to add to the discount
+        /// </returns>
+        Task<AddVendorToDiscountListModel> PrepareAddVendorToDiscountListModelAsync(AddVendorToDiscountSearchModel searchModel);
     }
 }

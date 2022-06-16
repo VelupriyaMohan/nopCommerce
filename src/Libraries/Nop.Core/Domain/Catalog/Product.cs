@@ -399,7 +399,20 @@ namespace Nop.Core.Domain.Catalog
         /// <summary>
         /// Gets or sets the price
         /// </summary>
+        /// </summary>
         public decimal Price { get; set; }
+
+        //public decimal _price { get; set; }
+
+        private decimal price;
+        public decimal PriceWithCommission
+        {
+
+            get => (decimal)ProductTypeId + (decimal)11.112;
+            set => price = value;
+            //get { return this.ProductCost * this.ProductCost; }
+            //set { this.Price = value; }
+        }
 
         /// <summary>
         /// Gets or sets the old price

@@ -457,6 +457,149 @@ namespace Nop.Web.Areas.Admin.Controllers
             return RedirectToAction("List");
         }
 
+
+        //[HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+
+        //public virtual async Task<IActionResult> Create(ManufacturerModel model, bool continueEditing)
+        //{
+        //    if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+        //        return AccessDeniedView();
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var manufacturer = model.ToEntity<Manufacturer>();
+        //        manufacturer.CreatedOnUtc = DateTime.UtcNow;
+        //        manufacturer.UpdatedOnUtc = DateTime.UtcNow;
+        //        await _manufacturerService.InsertManufacturerAsync(manufacturer);
+
+        //        //search engine name
+        //        model.SeName = await _urlRecordService.ValidateSeNameAsync(manufacturer, model.SeName, manufacturer.Name, true);
+        //        await _urlRecordService.SaveSlugAsync(manufacturer, model.SeName, 0);
+
+        //        //locales
+        //        await UpdateLocalesAsync(manufacturer, model);
+
+        //        //discounts
+        //        var allDiscounts = await _discountService.GetAllDiscountsAsync(DiscountType.AssignedToManufacturers, showHidden: true);
+        //        foreach (var discount in allDiscounts)
+        //        {
+        //            if (model.SelectedDiscountIds != null && model.SelectedDiscountIds.Contains(discount.Id))
+        //                //manufacturer.AppliedDiscounts.Add(discount);
+        //                await _manufacturerService.InsertDiscountManufacturerMappingAsync(new DiscountManufacturerMapping { EntityId = manufacturer.Id, DiscountId = discount.Id });
+
+        //        }
+
+        //        await _manufacturerService.UpdateManufacturerAsync(manufacturer);
+
+        //        //update picture seo file name
+        //        await UpdatePictureSeoNamesAsync(manufacturer);
+
+        //        //ACL (customer roles)
+        //        await SaveManufacturerAclAsync(manufacturer, model);
+
+        //        //stores
+        //        await SaveStoreMappingsAsync(manufacturer, model);
+
+        //        //activity log
+        //        await _customerActivityService.InsertActivityAsync("AddNewManufacturer",
+        //            string.Format(await _localizationService.GetResourceAsync("ActivityLog.AddNewManufacturer"), manufacturer.Name), manufacturer);
+
+        //        _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Catalog.Manufacturers.Added"));
+
+        //        if (!continueEditing)
+        //            return RedirectToAction("List");
+
+        //        return RedirectToAction("Edit", new { id = manufacturer.Id });
+        //    }
+
+        //    //prepare model
+        //    model = await _manufacturerModelFactory.PrepareManufacturerModelAsync(model, null, true);
+
+        //    //if we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
+        //[HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        //public virtual async Task<IActionResult> Edit(ManufacturerModel model, bool continueEditing)
+        //{
+        //    if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+        //        return AccessDeniedView();
+
+        //    //try to get a manufacturer with the specified id
+        //    var manufacturer = await _manufacturerService.GetManufacturerByIdAsync(model.Id);
+        //    if (manufacturer == null || manufacturer.Deleted)
+        //        return RedirectToAction("List");
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var prevPictureId = manufacturer.PictureId;
+        //        manufacturer = model.ToEntity(manufacturer);
+        //        manufacturer.UpdatedOnUtc = DateTime.UtcNow;
+        //        await _manufacturerService.UpdateManufacturerAsync(manufacturer);
+
+        //        //search engine name
+        //        model.SeName = await _urlRecordService.ValidateSeNameAsync(manufacturer, model.SeName, manufacturer.Name, true);
+        //        await _urlRecordService.SaveSlugAsync(manufacturer, model.SeName, 0);
+
+        //        //locales
+        //        await UpdateLocalesAsync(manufacturer, model);
+
+        //        //discounts
+        //        var allDiscounts = await _discountService.GetAllDiscountsAsync(DiscountType.AssignedToManufacturers, showHidden: true);
+        //        foreach (var discount in allDiscounts)
+        //        {
+        //            if (model.SelectedDiscountIds != null && model.SelectedDiscountIds.Contains(discount.Id))
+        //            {
+        //                //new discount
+        //                if (await _manufacturerService.GetDiscountAppliedToManufacturerAsync(manufacturer.Id, discount.Id) is null)
+        //                    await _manufacturerService.InsertDiscountManufacturerMappingAsync(new DiscountManufacturerMapping { EntityId = manufacturer.Id, DiscountId = discount.Id });
+        //            }
+        //            else
+        //            {
+        //                //remove discount
+        //                if (await _manufacturerService.GetDiscountAppliedToManufacturerAsync(manufacturer.Id, discount.Id) is DiscountManufacturerMapping discountManufacturerMapping)
+        //                    await _manufacturerService.DeleteDiscountManufacturerMappingAsync(discountManufacturerMapping);
+        //            }
+        //        }
+
+        //        await _manufacturerService.UpdateManufacturerAsync(manufacturer);
+
+        //        //delete an old picture (if deleted or updated)
+        //        if (prevPictureId > 0 && prevPictureId != manufacturer.PictureId)
+        //        {
+        //            var prevPicture = await _pictureService.GetPictureByIdAsync(prevPictureId);
+        //            if (prevPicture != null)
+        //                await _pictureService.DeletePictureAsync(prevPicture);
+        //        }
+
+        //        //update picture seo file name
+        //        await UpdatePictureSeoNamesAsync(manufacturer);
+
+        //        //ACL
+        //        await SaveManufacturerAclAsync(manufacturer, model);
+
+        //        //stores
+        //        await SaveStoreMappingsAsync(manufacturer, model);
+
+        //        //activity log
+        //        await _customerActivityService.InsertActivityAsync("EditManufacturer",
+        //            string.Format(await _localizationService.GetResourceAsync("ActivityLog.EditManufacturer"), manufacturer.Name), manufacturer);
+
+        //        _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Catalog.Manufacturers.Updated"));
+
+        //        if (!continueEditing)
+        //            return RedirectToAction("List");
+
+        //        return RedirectToAction("Edit", new { id = manufacturer.Id });
+        //    }
+
+        //    //prepare model
+        //    model = await _manufacturerModelFactory.PrepareManufacturerModelAsync(model, manufacturer, true);
+
+        //    //if we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
+
+
         #endregion
 
         #region Vendor notes

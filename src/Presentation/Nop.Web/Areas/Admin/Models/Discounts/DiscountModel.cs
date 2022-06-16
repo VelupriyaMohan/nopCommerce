@@ -22,6 +22,7 @@ namespace Nop.Web.Areas.Admin.Models.Discounts
             DiscountProductSearchModel = new DiscountProductSearchModel();
             DiscountCategorySearchModel = new DiscountCategorySearchModel();
             DiscountManufacturerSearchModel = new DiscountManufacturerSearchModel();
+            DiscountVendorSearchModel = new DiscountVendorSearchModel();
         }
 
         #endregion
@@ -112,6 +113,9 @@ namespace Nop.Web.Areas.Admin.Models.Discounts
         public DiscountCategorySearchModel DiscountCategorySearchModel { get; set; }
 
         public DiscountManufacturerSearchModel DiscountManufacturerSearchModel { get; set; }
+
+        public DiscountVendorSearchModel DiscountVendorSearchModel { get; set; }
+
 
         #endregion
     }

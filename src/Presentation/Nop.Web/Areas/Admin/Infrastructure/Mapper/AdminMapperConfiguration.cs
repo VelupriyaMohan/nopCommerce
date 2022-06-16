@@ -957,6 +957,10 @@ namespace Nop.Web.Areas.Admin.Infrastructure.Mapper
             CreateMap<Manufacturer, DiscountManufacturerModel>()
                 .ForMember(entity => entity.ManufacturerId, options => options.Ignore())
                 .ForMember(entity => entity.ManufacturerName, options => options.Ignore());
+
+            CreateMap<Vendor, DiscountVendorModel>()
+                .ForMember(entity => entity.VendorId, options => options.Ignore())
+                .ForMember(entity => entity.VendorName, options => options.Ignore());
         }
 
         /// <summary>

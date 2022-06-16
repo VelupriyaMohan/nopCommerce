@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nop.Core;
+using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Discounts;
 using Nop.Core.Domain.Vendors;
 
 namespace Nop.Services.Vendors
@@ -127,5 +130,49 @@ namespace Nop.Services.Vendors
         /// <param name="vendorNote">Vendor note</param>
         /// <returns>Formatted text</returns>
         string FormatVendorNoteText(VendorNote vendorNote);
+
+        Task<IList<int>> GetAppliedVendorIdsAsync(Discount discount, Customer customer);
+        Task ClearDiscountVendorMappingAsync(Discount discount);
+
+        /// <summary>
+        /// Get a discount-vendor mapping record
+        /// </summary>
+        /// <param name="vendorId">Vendor identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        Task<DiscountVendorMapping> GetDiscountAppliedToVendorAsync(int vendorId, int discountId);
+
+        /// <summary>
+        /// Inserts a discount-vendor mapping record
+        /// </summary>
+        /// <param name="discountVendorMapping">Discount-vendor mapping</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task InsertDiscountVendorMappingAsync(DiscountVendorMapping discountVendorMapping);
+
+        /// <summary>
+        /// Deletes a discount-vendor mapping record
+        /// </summary>
+        /// <param name="discountVendorMapping">Discount-vendor mapping</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task DeleteDiscountVendorMappingAsync(DiscountVendorMapping discountVendorMapping);
+
+        Task<IPagedList<Vendor>> GetVendorsWithAppliedDiscountAsync(int? discountId = null,
+            bool showHidden = false, int pageIndex = 0, int pageSize = int.MaxValue);
+
+
+        /// <summary>
+        /// Gets a product vendor mapping collection
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the product vendor mapping collection
+        /// </returns>
+       // Task<IList<ProductVendor>> GetProductVendorsByProductIdAsync(int productId, bool showHidden = false);
+
     }
 }

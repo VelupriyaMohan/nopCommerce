@@ -1,4 +1,4 @@
-namespace Nop.Core.Domain.Discounts
+﻿namespace Nop.Core.Domain.Discounts
 {
     /// <summary>
     /// Represents a discount type
@@ -19,7 +19,7 @@ namespace Nop.Core.Domain.Discounts
         /// Assigned to categories (all products in a category)
         /// </summary>
         AssignedToCategories = 5,
-
+        
         /// <summary>
         /// Assigned to manufacturers (all products of a manufacturer)
         /// </summary>
@@ -33,6 +33,11 @@ namespace Nop.Core.Domain.Discounts
         /// <summary>
         /// Assigned to order subtotal
         /// </summary>
-        AssignedToOrderSubTotal = 20
+        AssignedToOrderSubTotal = 20,
+
+        /// <summary>
+        /// Assigned to manufacturers (all products of a manufacturer)
+        /// </summary>
+        AssignedToVendors = 101,
     }
 }

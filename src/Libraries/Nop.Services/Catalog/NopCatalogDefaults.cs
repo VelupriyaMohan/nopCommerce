@@ -173,12 +173,26 @@ namespace Nop.Services.Catalog
         public static CacheKey ProductManufacturersByProductCacheKey => new("Nop.productmanufacturer.byproduct.{0}-{1}-{2}-{3}", ProductManufacturersByProductPrefix);
 
         /// <summary>
+        /// Gets a key for caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : product ID
+        /// {1} : show hidden records?
+        /// {2} : current customer ID
+        /// {3} : store ID
+        /// </remarks>
+        public static CacheKey ProductVendorsByProductCacheKey => new("Nop.productvendor.byproduct.{0}-{1}-{2}-{3}", ProductVendorsByProductPrefix);
+
+        /// <summary>
         /// Gets a key pattern to clear cache
         /// </summary>
         /// <remarks>
         /// {0} : product ID
         /// </remarks>
         public static string ProductManufacturersByProductPrefix => "Nop.productmanufacturer.byproduct.{0}";
+
+        public static string ProductVendorsByProductPrefix => "Nop.productvendor.byproduct.{0}";
+
 
         /// <summary>
         /// Gets a key for caching

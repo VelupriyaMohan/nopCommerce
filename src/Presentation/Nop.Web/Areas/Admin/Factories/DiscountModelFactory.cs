@@ -16,9 +16,11 @@ using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Seo;
+using Nop.Services.Vendors;
 using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Nop.Web.Areas.Admin.Models.Catalog;
 using Nop.Web.Areas.Admin.Models.Discounts;
+using Nop.Web.Areas.Admin.Models.Vendors;
 using Nop.Web.Framework.Models.Extensions;
 
 namespace Nop.Web.Areas.Admin.Factories
@@ -44,6 +46,7 @@ namespace Nop.Web.Areas.Admin.Factories
         private readonly IProductService _productService;
         private readonly IUrlRecordService _urlRecordService;
         private readonly IWebHelper _webHelper;
+        private readonly IVendorService _vendorService;
 
         #endregion
 
@@ -62,7 +65,9 @@ namespace Nop.Web.Areas.Admin.Factories
             IPriceFormatter priceFormatter,
             IProductService productService,
             IUrlRecordService urlRecordService,
-            IWebHelper webHelper)
+            IWebHelper webHelper,
+            IVendorService vendorService
+            )
         {
             _currencySettings = currencySettings;
             _baseAdminModelFactory = baseAdminModelFactory;
@@ -78,7 +83,8 @@ namespace Nop.Web.Areas.Admin.Factories
             _productService = productService;
             _urlRecordService = urlRecordService;
             _webHelper = webHelper;
-        }
+            _vendorService = vendorService;
+    }
 
         #endregion
 
@@ -158,6 +164,31 @@ namespace Nop.Web.Areas.Admin.Factories
         /// <param name="discount">Discount</param>
         /// <returns>Discount manufacturer search model</returns>
         protected virtual DiscountManufacturerSearchModel PrepareDiscountManufacturerSearchModel(DiscountManufacturerSearchModel searchModel,
+            Discount discount)
+        {
+            if (searchModel == null)
+                throw new ArgumentNullException(nameof(searchModel));
+
+            if (discount == null)
+                throw new ArgumentNullException(nameof(discount));
+
+            searchModel.DiscountId = discount.Id;
+
+            //prepare page parameters
+            searchModel.SetGridPageSize();
+
+            return searchModel;
+        }
+
+
+
+        /// <summary>
+        /// Prepare discount vendor search model
+        /// </summary>
+        /// <param name="searchModel">Discount vendor search model</param>
+        /// <param name="discount">Discount</param>
+        /// <returns>Discount vendor search model</returns>
+        protected virtual DiscountVendorSearchModel PrepareDiscountVendorSearchModel(DiscountVendorSearchModel searchModel,
             Discount discount)
         {
             if (searchModel == null)
@@ -299,6 +330,8 @@ namespace Nop.Web.Areas.Admin.Factories
                 PrepareDiscountProductSearchModel(model.DiscountProductSearchModel, discount);
                 PrepareDiscountCategorySearchModel(model.DiscountCategorySearchModel, discount);
                 PrepareDiscountManufacturerSearchModel(model.DiscountManufacturerSearchModel, discount);
+                PrepareDiscountVendorSearchModel(model.DiscountVendorSearchModel, discount);
+
             }
 
             model.PrimaryStoreCurrencyCode = (await _currencyService.GetCurrencyByIdAsync(_currencySettings.PrimaryStoreCurrencyId)).CurrencyCode;
@@ -718,6 +751,101 @@ namespace Nop.Web.Areas.Admin.Factories
                     manufacturerModel.SeName = await _urlRecordService.GetSeNameAsync(manufacturer, 0, true, false);
 
                     return manufacturerModel;
+                });
+            });
+
+            return model;
+        }
+
+
+
+        /// <summary>
+        /// Prepare paged discount vendor list model
+        /// </summary>
+        /// <param name="searchModel">Discount vendor search model</param>
+        /// <param name="discount">Discount</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the discount vendor list model
+        /// </returns>
+        public virtual async Task<DiscountVendorListModel> PrepareDiscountVendorListModelAsync(DiscountVendorSearchModel searchModel,
+            Discount discount)
+        {
+            if (searchModel == null)
+                throw new ArgumentNullException(nameof(searchModel));
+
+            if (discount == null)
+                throw new ArgumentNullException(nameof(discount));
+
+          
+            //get vendors with applied discount
+            var discountVendors = await _vendorService.GetVendorsWithAppliedDiscountAsync(discountId: discount.Id,
+                showHidden: false,
+                pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+            //prepare grid model
+            var model = new DiscountVendorListModel().PrepareToGrid(searchModel, discountVendors, () =>
+            {
+                //fill in model values from the entity
+                return discountVendors.Select(vendor =>
+                {
+                    var discountVendorModel = vendor.ToModel<DiscountVendorModel>();
+                    discountVendorModel.VendorId = vendor.Id;
+                    discountVendorModel.VendorName = vendor.Name;
+
+                    return discountVendorModel;
+                });
+            });
+
+            return model;
+        }
+
+        /// <summary>
+        /// Prepare vendor search model to add to the discount
+        /// </summary>
+        /// <param name="searchModel">Vendor search model to add to the discount</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the vendor search model to add to the discount
+        /// </returns>
+        public virtual Task<AddVendorToDiscountSearchModel> PrepareAddVendorToDiscountSearchModelAsync(AddVendorToDiscountSearchModel searchModel)
+        {
+            if (searchModel == null)
+                throw new ArgumentNullException(nameof(searchModel));
+
+            //prepare page parameters
+            searchModel.SetPopupGridPageSize();
+
+            return Task.FromResult(searchModel);
+        }
+
+        /// <summary>
+        /// Prepare paged vendor list model to add to the discount
+        /// </summary>
+        /// <param name="searchModel">Vendor search model to add to the discount</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the vendor list model to add to the discount
+        /// </returns>
+        public virtual async Task<AddVendorToDiscountListModel> PrepareAddVendorToDiscountListModelAsync(AddVendorToDiscountSearchModel searchModel)
+        {
+            if (searchModel == null)
+                throw new ArgumentNullException(nameof(searchModel));
+
+            //get vendors
+            var vendors = await _vendorService.GetAllVendorsAsync(showHidden: true,
+                name: searchModel.SearchVendorName,
+                pageIndex: searchModel.Page - 1, pageSize: searchModel.PageSize);
+
+            //prepare grid model
+            var model = await new AddVendorToDiscountListModel().PrepareToGridAsync(searchModel, vendors, () =>
+            {
+                return vendors.SelectAwait(async vendor =>
+                {
+                    var vendorModel = vendor.ToModel<VendorModel>();
+                    vendorModel.SeName = await _urlRecordService.GetSeNameAsync(vendor, 0, true, false);
+
+                    return vendorModel;
                 });
             });
 
