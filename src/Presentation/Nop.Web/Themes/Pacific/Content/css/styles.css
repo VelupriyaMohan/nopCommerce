@@ -3819,11 +3819,12 @@ span[title~="White"] .attribute-square {
 .variant-overview .old-product-price,
 .overview .non-discounted-price,
 .variant-overview .non-discounted-price {
-    display: inline-block;
-    margin: 0 0 0 18px;
-	font-size: 18px;
-    font-weight: bold;
-	text-decoration: line-through;
+  display: inline-block;
+  margin: 0 0 0 18px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: line-through;
+  display: none !important;
 }
 .overview .product-price label,
 .variant-overview .product-price label,

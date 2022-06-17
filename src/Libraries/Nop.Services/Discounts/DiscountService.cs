@@ -322,15 +322,15 @@ namespace Nop.Services.Discounts
             discountAmount = decimal.Zero;
             if (!discounts.Any())
                 return result;
-
+            //TODO: updated to add all type of commissions together, wch might go wrong for discount flow
             //first we check simple discounts
             foreach (var discount in discounts)
             {
                 var currentDiscountValue = GetDiscountAmount(discount, amount);
                 //if (currentDiscountValue <= discountAmount)
                 //    continue;
-
-                discountAmount = currentDiscountValue;
+                //discountAmount = currentDiscountValue;
+                discountAmount = discountAmount + currentDiscountValue;
 
                // result.Clear();
                 result.Add(discount);

@@ -200,4 +200,9 @@ src/Presentation/Nop.Web/wwwroot/lib_npm/cldr-data/main/*
 !src/Presentation/Nop.Web/wwwroot/lib_npm/cldr-data/main/main.zip
 src/packages/*
 src/Tests/Nop.Tests/Connections.resx
+<<<<<<< HEAD
 /src/Presentation/Nop.Web/Themes/Pacific/Content/css/theme.custom-1.css
+=======
+/src/Presentation/Nop.Web/wwwroot/images
+/src/Presentation/Nop.Web/aws-beanstalk-tools-defaults.json
+>>>>>>> 6ae91d3858 (adding multi discount at a time)
