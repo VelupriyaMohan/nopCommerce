@@ -198,6 +198,7 @@
                                 </div>
                         		@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
                             </div>
+                            @await Html.PartialAsync("_MultiVendorProductPricingInMap", Model)
                             @if (!isProductPageLayoutOne)
                             {
 								@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBeforeCollateral, additionalData = Model })
@@ -251,4 +252,5 @@
         </form>
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
     </div>
-</div>
+</div
+
