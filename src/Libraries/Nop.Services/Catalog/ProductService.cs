@@ -1246,6 +1246,31 @@ namespace Nop.Services.Catalog
             return await query.ToListAsync();
         }
 
+
+
+        /// <summary>
+        /// Gets a products by SKU array
+        /// </summary>
+        /// <param name="skuArray">SKU array</param>
+        /// <param name="vendorId">Vendor ID; 0 to load all records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the products
+        /// </returns>
+        public async Task<IList<Product>> GetProductsBySkuAsync(string manufacturerPartNumber, int categoryId = 0)
+        {
+            if (manufacturerPartNumber == null)
+                throw new ArgumentNullException(nameof(manufacturerPartNumber));
+
+            var query = _productRepository.Table;
+            query = query.Where(p => !p.Deleted && manufacturerPartNumber == p.ManufacturerPartNumber);
+
+            //if (vendorId != 0)
+            //    query = query.Where(p => p. == vendorId);
+
+            return await query.ToListAsync();
+        }
+
         /// <summary>
         /// Update HasTierPrices property (used for performance optimization)
         /// </summary>

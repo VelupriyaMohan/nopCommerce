@@ -1353,7 +1353,7 @@ namespace Nop.Web.Factories
         /// The task result contains the product details model
         /// </returns>
         public virtual async Task<ProductDetailsModel> PrepareProductDetailsModelAsync(Product product,
-            ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false)
+            ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false, dynamic modelNumberProducts = null)
         {
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
@@ -1427,8 +1427,32 @@ namespace Nop.Web.Factories
                         Id = vendor.Id,
                         Name = await _localizationService.GetLocalizedAsync(vendor, x => x.Name),
                         SeName = await _urlRecordService.GetSeNameAsync(vendor),
+                        Latitude = vendor.Latitude,
+                        Longitude = vendor.Longitude
                     };
                 }
+            }
+
+            //vendors lat long for mapping
+            if (_vendorSettings.ShowVendorOnProductDetailsPage)
+            {
+                model.VendorModelsForMaps = await _vendorService.GetVendorsByIdsAsync(modelNumberProducts);
+                //if (vendors != null)
+                //{
+                //    //model.ShowVendor = true;
+
+                //    //vendors.ForEach(x =>
+                //    //{
+                //    //    model.VendorModelsForMap.add(new VendorBriefInfoModel
+                //    //    {
+                //    //        Id = vendor.Id,
+                //    //        Name = await _localizationService.GetLocalizedAsync(vendor, x => x.Name),
+                //    //        SeName = await _urlRecordService.GetSeNameAsync(vendor),
+                //    //        Latitude = vendor.Latitude,
+                //    //        Longitude = vendor.Longitude
+                //    //    });
+                //    //});
+                //}
             }
 
             //page sharing

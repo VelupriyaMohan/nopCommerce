@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Domain.Vendors;
 using Nop.Web.Framework.Models;
 using Nop.Web.Framework.Mvc.ModelBinding;
 using Nop.Web.Models.Media;
@@ -59,6 +60,11 @@ namespace Nop.Web.Models.Catalog
 
         public bool ShowVendor { get; set; }
         public VendorBriefInfoModel VendorModel { get; set; }
+
+        public  IList<VendorBriefInfoModel> VendorModelsForMap { get; set; }
+
+        public IList<Vendor> VendorModelsForMaps { get; set; }
+
 
         public bool HasSampleDownload { get; set; }
 

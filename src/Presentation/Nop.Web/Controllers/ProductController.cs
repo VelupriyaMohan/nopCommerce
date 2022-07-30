@@ -162,6 +162,22 @@ namespace Nop.Web.Controllers
         public virtual async Task<IActionResult> ProductDetails(int productId, int updatecartitemid = 0)
         {
             var product = await _productService.GetProductByIdAsync(productId);
+
+
+            var products = await _productService.SearchProductsAsync(0,
+                
+                //categoryIds: categoryIds,
+                //manufacturerIds: new List<int> { model.SearchManufacturerId },
+                //storeId: model.SearchStoreId,
+                //vendorId: model.SearchVendorId,
+                //warehouseId: model.SearchWarehouseId,
+                //productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId : null,
+                keywords: product.ManufacturerPartNumber,
+                searchManufacturerPartNumber: true,
+                showHidden: true
+                //overridePublished: overridePublished
+                );
+            var vendorIds = products.Select(x => x.VendorId).ToArray().Distinct();
             if (product == null || product.Deleted)
                 return InvokeHttp404();
 
@@ -230,7 +246,7 @@ namespace Nop.Web.Controllers
                 string.Format(await _localizationService.GetResourceAsync("ActivityLog.PublicStore.ViewProduct"), product.Name), product);
 
             //model
-            var model = await _productModelFactory.PrepareProductDetailsModelAsync(product, updatecartitem, false);
+            var model = await _productModelFactory.PrepareProductDetailsModelAsync(product, updatecartitem, false, vendorIds);
             //template
             var productTemplateViewPath = await _productModelFactory.PrepareProductTemplateViewPathAsync(product);
 

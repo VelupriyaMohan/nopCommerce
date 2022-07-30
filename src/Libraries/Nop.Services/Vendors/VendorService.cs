@@ -114,6 +114,27 @@ namespace Nop.Services.Vendors
                           select v).FirstOrDefaultAsync();
         }
 
+
+        /// <summary>
+        /// Gets a vendors by vendors identifier
+        /// </summary>
+        /// <param name="vendorIds">Vendor identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the vendors list
+        /// </returns>
+        public virtual async Task<IList<Vendor>> GetVendorsByIdsAsync(int[] vendorIds)
+        {
+
+            //TODO: cache layer should be added
+            if (vendorIds is null)
+                throw null;//new ArgumentNullException(nameof(vendorIds));
+
+            return await (from v in _vendorRepository.Table
+                          where vendorIds.Contains( v.Id ) && !v.Deleted && v.Active
+                          select v).Distinct().ToListAsync();
+        }
+
         /// <summary>
         /// Gets vendors by product identifiers
         /// </summary>
