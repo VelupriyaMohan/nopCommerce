@@ -123,7 +123,7 @@ namespace Nop.Services.Vendors
         /// A task that represents the asynchronous operation
         /// The task result contains the vendors list
         /// </returns>
-        public virtual async Task<IList<Vendor>> GetVendorsByIdsAsync(int[] vendorIds)
+        public virtual async Task<IList<Vendor>> GetVendorsByIdsAsync(IEnumerable<int> vendorIds)
         {
 
             //TODO: cache layer should be added

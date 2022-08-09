@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Vendors;
@@ -114,6 +115,10 @@ namespace Nop.Web.Models.Catalog
 
         //a list of associated products. For example, "Grouped" products could have several child "simple" products
         public IList<ProductDetailsModel> AssociatedProducts { get; set; }
+
+
+        //a list of associated products. For example, "Grouped" products could have several child "simple" products
+        public IPagedList<Product> MatchingProductsForMap { get; set; }
 
         public bool DisplayDiscontinuedMessage { get; set; }
 

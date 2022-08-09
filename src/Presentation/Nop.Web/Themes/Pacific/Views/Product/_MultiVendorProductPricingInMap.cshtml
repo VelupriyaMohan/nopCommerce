@@ -7,10 +7,15 @@
 @{
     var shareUrl = webHelper.GetStoreLocation();
     var allowedFileExtensions = Model;
-  var vendorModel =  JsonConvert.SerializeObject(@allowedFileExtensions.VendorModel);
+    var vendorModel =  JsonConvert.SerializeObject(@allowedFileExtensions.VendorModel);
+    var vendorModelsForMaps = JsonConvert.SerializeObject(" { mapper: "+@allowedFileExtensions.VendorModelsForMaps+"}");
+    var matchingProductsForMap = JsonConvert.SerializeObject(" { mapper: "+@allowedFileExtensions.MatchingProductsForMap+"}");
 }
 <div id="map"></div>
-<input type="hidden" id="PassingToJavaScript2" value=@vendorModel>
+<input type="hidden" id="vendorModel" value=@vendorModel>
+<input type="hidden" id="vendorModelsForMaps" value=@vendorModelsForMaps>
+<input type="hidden" id="matchingProductsForMap" value=@matchingProductsForMap>
+
 <div class="product-social-buttons">
     <script   asp-location="None" src="https://maps.googleapis.com/maps/api/js?&sensor=false&v=3&key=AIzaSyCNQrOZMXYBcGlvkXMBGeD68FQxpaQhGdw"></script>
     <script   asp-location="None" src="https://cdn.sobekdigital.com/includes/gmaps-markerwithlabel/1.9.1/gmaps-markerwithlabel-1.9.1.js"></script>

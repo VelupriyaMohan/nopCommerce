@@ -1342,8 +1342,16 @@ var imgArr = [{
 
 function initialize() {
 
-  var vendorDetails = JSON.parse(document.getElementById("PassingToJavaScript2")?.value)
+  var vendorDetails = JSON.parse(document.getElementById("vendorModel")?.value);
+  //var vendorModelsForMaps = JSON.parse(document.getElementById("vendorModelsForMaps")?.value);
+ // var matchingProductsForMap = JSON.parse(document.getElementById("matchingProductsForMap")?.value);
+
+  debugger;
   console.log(vendorDetails);
+  //console.log(vendorModelsForMaps);
+
+  //console.log(matchingProductsForMap);
+
   //var markerCenter = new google.maps.LatLng(25.0625938, 121.5288613);
   var markerCenter = new google.maps.LatLng(currentUserLat, currentUserLong);
 

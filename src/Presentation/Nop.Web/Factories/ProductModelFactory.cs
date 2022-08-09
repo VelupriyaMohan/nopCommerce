@@ -1353,7 +1353,7 @@ namespace Nop.Web.Factories
         /// The task result contains the product details model
         /// </returns>
         public virtual async Task<ProductDetailsModel> PrepareProductDetailsModelAsync(Product product,
-            ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false, dynamic modelNumberProducts = null)
+            ShoppingCartItem updatecartitem = null, bool isAssociatedProduct = false, IEnumerable<int> modelNumberProducts = null, IPagedList<Product> matchingProductsForMap = null)
         {
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
@@ -1383,7 +1383,8 @@ namespace Nop.Web.Factories
                 DisplayDiscontinuedMessage = !product.Published && _catalogSettings.DisplayDiscontinuedMessageForUnpublishedProducts,
                 AvailableEndDate = product.AvailableEndDateTimeUtc,
                 VisibleIndividually = product.VisibleIndividually,
-                AllowAddingOnlyExistingAttributeCombinations = product.AllowAddingOnlyExistingAttributeCombinations
+                AllowAddingOnlyExistingAttributeCombinations = product.AllowAddingOnlyExistingAttributeCombinations,
+                MatchingProductsForMap = matchingProductsForMap
             };
 
             //automatically generate product description?

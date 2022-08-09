@@ -246,7 +246,7 @@ namespace Nop.Web.Controllers
                 string.Format(await _localizationService.GetResourceAsync("ActivityLog.PublicStore.ViewProduct"), product.Name), product);
 
             //model
-            var model = await _productModelFactory.PrepareProductDetailsModelAsync(product, updatecartitem, false, vendorIds);
+            var model = await _productModelFactory.PrepareProductDetailsModelAsync(product, updatecartitem, false, vendorIds, products);
             //template
             var productTemplateViewPath = await _productModelFactory.PrepareProductTemplateViewPathAsync(product);
 
