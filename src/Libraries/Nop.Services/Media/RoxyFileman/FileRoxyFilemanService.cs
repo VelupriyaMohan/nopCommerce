@@ -341,9 +341,17 @@ namespace Nop.Services.Media.RoxyFileman
         /// </summary>
         /// <param name="type">Type of the file</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task GetDirectoriesAsync(string type)
+        public virtual async Task GetDirectoriesAsync(string type,string productName = "")
         {
-            var rootDirectoryPath = GetFullPath(await GetVirtualPathAsync(null));
+            var rootDirectoryPath = string.Empty;
+            if (productName != "")
+            {
+                rootDirectoryPath = GetFullPath("images/uploaded/" + productName);
+            }
+            else
+            {
+                rootDirectoryPath = GetFullPath(await GetVirtualPathAsync(null));
+            }
 
             if (!_fileProvider.DirectoryExists(rootDirectoryPath))
                 throw new Exception("Invalid files root directory. Check your configuration.");

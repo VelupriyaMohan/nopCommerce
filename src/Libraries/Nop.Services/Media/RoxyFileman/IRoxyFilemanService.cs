@@ -65,7 +65,7 @@ namespace Nop.Services.Media.RoxyFileman
         /// </summary>
         /// <param name="type">Type of the file</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task GetDirectoriesAsync(string type);
+        Task GetDirectoriesAsync(string type,string productName ="");
 
         /// <summary>
         /// Move the directory

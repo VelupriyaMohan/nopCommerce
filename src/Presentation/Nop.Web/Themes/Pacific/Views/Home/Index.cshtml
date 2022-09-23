@@ -2,9 +2,15 @@
 @using Nop.Services.Configuration
 @using Nop.Core.Domain.Seo
 
+
+
 @inject SeoSettings seoSettings
 @inject ISettingService settingService
 @inject IStoreContext storeContext
+@inject Nop.Core.IWebHelper webHelper
+@inject Nop.Services.Html.IHtmlFormatter htmlFormatter
+@model ProductDetailsModel
+
 
 @{
     Layout = "_ColumnsOne";
@@ -44,9 +50,12 @@
     <div class="page-body">
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageTop })
         <div class="home-page-categories-wrapper @homePageCategoryBoxLayoutClass">
-            <div class="home-page-slider">
-                @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_main_slider" })
+            <div>
+                \Presentation\Nop.Web\Themes\Pacific\Views\Product
+                ~/Themes/Pacific/Views/Product/_MultiVendorProductPricingInMap.cshtml
+                 @await Html.PartialAsync("_MultiVendorProductPricingInMap", Model)
             </div>
+           
         	@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HomepageBeforeCategories })
             @await Component.InvokeAsync("HomepageCategories")
         </div>

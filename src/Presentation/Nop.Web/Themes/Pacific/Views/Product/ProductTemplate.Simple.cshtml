@@ -10,6 +10,20 @@
 @inject ISettingService settingService
 @inject IStoreContext storeContext
 
+<style>
+    .blueimp-gallery > .description {
+  position: absolute;
+  top: 30px;
+  left: 15px;
+  color: #fff;
+  display: none;
+}
+
+.blueimp-gallery-controls > .description {
+  display: block;
+}
+</style>
+
 @{
     Layout = "_ColumnsOne";
 
@@ -77,6 +91,7 @@
     var categoryNavigation = await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId });
 }
 
+
 <div class="page product-details-page @productPageLayoutClass">
     <div class="page-body">
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
@@ -115,16 +130,17 @@
                                 <div class="product-overview-top">
                                     <div class="product-name">
                                         <h1>
-                                            @Model.Name
+                                            @Model.Name + "dfhfdi wjifh owiu jwfiuewf"
                                         </h1>
                                     </div>
                                     <!--product reviews-->
                                     @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)
                                 </div>
+                                
                                 @if (!string.IsNullOrEmpty(Model.ShortDescription))
                                 {
                                     <div class="short-description">
-                                        @Html.Raw(Model.ShortDescription)
+                                        @Html.Raw(Model.ShortDescription) +"hjsdhfuskdhfiuhfjds coufh udhfwwef hoiwewe"
                                     </div>
                                 }
                                 <!--price-->
@@ -215,9 +231,11 @@
                                 @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_after_collateral", additionalData = Model.Id })
                             }
                         </div>
+                      
                     </div>
                     @if (isProductPageLayoutOne)
                     {
+                        
 						@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBeforeCollateral, additionalData = Model })
                         <div class="product-collateral">
                             @if (!string.IsNullOrEmpty(Model.FullDescription))
@@ -227,6 +245,30 @@
                                 </div>
                             }
                             @await Html.PartialAsync("_ProductSpecifications", Model.ProductSpecificationModel)
+                             <div id="otembImages" class="row">
+                                      <script asp-location="Footer" src="~/Themes/Pacific/Content/scripts/productImageGallery.js"> </script>
+                                 </div>
+                                @*    <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery-video.css" />
+                                      <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery-video.css" />
+                                       <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery-indicator.css" />
+                                       <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.css" />*@
+                                       @*<script asp-location="Head" src="http://blueimp.github.io/Gallery/js/blueimp-gallery.js"> </script>*@
+
+                                       <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.15.1/css/blueimp-gallery.min.css" />
+                                 <script async src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.15.1/js/blueimp-gallery.min.js"> </script>
+   
+
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <!-- The placeholder for the description label: -->
+    <p class="description"></p>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
                             @await Html.PartialAsync("_ProductTags", Model.ProductTags)
                         </div>
                         @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_after_collateral", additionalData = Model.Id })
@@ -252,5 +294,5 @@
         </form>
         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
     </div>
-</div
+</div>
 

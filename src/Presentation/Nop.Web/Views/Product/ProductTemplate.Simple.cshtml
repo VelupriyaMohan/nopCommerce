@@ -44,6 +44,7 @@
         NopHtml.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + webHelper.GetThisPageUrl(false) + "\" />");
     }
 }
+
 <!--product breadcrumb-->
 @section Breadcrumb
 {
@@ -67,7 +68,7 @@
                         @await Html.PartialAsync("_Discontinued", Model)
                         <div class="product-name">
                             <h1>
-                                @Model.Name
+                                @Model.Name +"testing the name "
                             </h1>
                         </div>
                         @if (!string.IsNullOrEmpty(Model.ShortDescription))
@@ -136,8 +137,45 @@
                         @await Html.PartialAsync("_ShareButton", Model)
                         @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
                     </div>
+                     <div class="pswp-gallery" id="my-gallery">
+                          <script src="~/Themes/Pacific/Content/scripts/productImageGallery.js"> </script>
+    <a
+      href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg"
+      data-pswp-width="1875"
+      data-pswp-height="2500"
+      target="_blank"   
+    >
+      <img
+        src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg"
+        alt=""
+      />
+    </a>
+    <a
+      href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg"
+      data-pswp-width="1669"
+      data-pswp-height="2500"
+      target="_blank"
+    >
+      <img
+        src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg"
+        alt=""
+      />
+    </a>
+    <a
+      href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg"
+      data-pswp-width="2500"
+      data-pswp-height="1666"
+      target="_blank"
+    >
+      <img
+        src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg"
+        alt=""
+      />
+    </a>
+  </div><p>testing</p>
                     @if (!string.IsNullOrEmpty(Model.FullDescription))
                     {
+                        
                         <div class="full-description">
                             @Html.Raw(Model.FullDescription)
                         </div>

@@ -12,6 +12,8 @@
 
     var allowRoxyFileman = await permissionService.AuthorizeAsync(StandardPermissionProvider.HtmlEditorManagePictures);
 
+    //var allowRoxyFileman = true;
+
     var random = CommonHelper.GenerateRandomInteger();
 
     //extend editor with additional settings
@@ -47,15 +49,22 @@
 
 <script>
     $(document).ready(function() {
+         
         @* wooncherk contribution *@
         function RoxyFileBrowser@(random)(callback, value, type) {
+            var abc = "";
+              abc = document.getElementById('roxy-productid').value;
+           
             //we manually generate the configuration file to ensure that it works fine in virtual directory
             $.ajax({
                 cache: false,
                 type: "GET",
                 url: "@Url.Action("CreateConfiguration", "RoxyFileman")",
+                 data: { 'roxyProductName': abc },
                 success: function (data, textStatus, jqXHR) {
                     var roxyFileman = '@Url.Content("~/lib/Roxy_Fileman/index.html")';
+          
+
                     roxyFileman += (roxyFileman.indexOf("?") < 0 ? "?" : "&") + "type=" + type.filetype;
                     if (value)
                         roxyFileman += '&value=' + value; // a link to already chosen image if it exists
